@@ -16,7 +16,6 @@ class Game
 	int height = 768;
 public:
 	Game();	
-	bool Enter(int& width, int& height, std::string& title);
 	void Update(double dt);
 	void Render(RenderManager& rendererManager);
 	void OnKeyDown(KeyCode key);
