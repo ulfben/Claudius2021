@@ -3,8 +3,6 @@
 #include <cmath>
 #include <iostream>
 
-#include "RenderManager.h"
-
 void Player::Initialize() {
   color.SetColor(0, 255, 0, 0);
   rect.SetBounds(0, 0, size, size);
@@ -18,15 +16,14 @@ void Player::Initialize() {
   }
 }
 
-void Player::Render(RenderManager& renderManager) {
-  renderManager.Render(rect, color, trans);
-
+void Player::render(const Renderer& renderManager) const noexcept {
+  renderManager.render(rect, color, trans);
   for (int i = 0; i < player_score; i++) {
-    renderManager.Render(parts[i].rect, parts[i].color, parts[i].trans);
+    renderManager.render(parts[i].rect, parts[i].color, parts[i].trans);
   }
 }
 
-void Player::Update([[maybe_unused]] double dt) {
+void Player::update([[maybe_unused]] double dt) {
   x_array_difference[0] = trans.GetX() - parts[0].trans.GetX();
   y_array_difference[0] = trans.GetY() - parts[0].trans.GetY();
 
@@ -70,7 +67,7 @@ void Player::Update([[maybe_unused]] double dt) {
   }
 }
 
-void Player::OnKeyDown(KeyCode key) {
+void Player::onKeyDown(KeyCode key) noexcept {
   if (key == KeyCode::LEFT_ARROW) {
     moving_left = true;
     moving_right = false;

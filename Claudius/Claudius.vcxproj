@@ -183,7 +183,6 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="RenderManager.h" />
     <ClInclude Include="SDLSystem.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Transform.h" />
