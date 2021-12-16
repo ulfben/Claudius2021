@@ -4,40 +4,24 @@
 #include "RenderManager.h"
 #include <iostream>
 
-Game::Game(ResourceManager& resourceManager) : m_resourceManager(resourceManager), width(1250), height(700)
+Game::Game()
 {
 	//Player test, moving two players to collide with each other.
 	playerOne.Initialize();
 	apple.Initialize(10, 10);
 }
 
-Game::~Game()
-{
-}
-
-bool Game::Enter(int& width, int& height, std::string& title)
-{
+bool Game::Enter(int& width, int& height, std::string& title) {
 	width = this->width;	//1250
 	height = this->height;	// 700
 	title = "Snake";
 	return true;
 }
 
-void Game::Update(double dt)
-{
-	// dt means delta time.
-	// timer += dt; <- check Game.h
-	// if (timer > updateInterval)
-	//{
-	// update snake movement
-	// timer = 0.0f; or timer -= updateInterval;
-	//}
-
+void Game::Update(double dt) {
 	playerOne.Update(dt);
 
-	// Player colliding on theirself.
-	for (int i = 0; i < playerOne.player_score; i++)
-	{
+	for (int i = 0; i < playerOne.player_score; i++) {
 		if (playerOne.trans.GetPosition() == playerOne.parts[i].trans.GetPosition())
 		{
 			playerOne.ResetPlayer();
