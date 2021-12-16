@@ -4,7 +4,7 @@
 #include "Vector2.h"
 
 class Apple {  
-  Color color{0, 255, 0, 0};
+  Color color{255, 0, 0, 0};
   Vector2 pos{100.0f, 200.0f};
  public:
   void render(const Renderer& r) const noexcept { r.render(pos, color); }
