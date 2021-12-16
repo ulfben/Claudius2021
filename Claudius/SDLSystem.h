@@ -2,7 +2,7 @@
 #include "CoreIncludes.h"
 class SDLSystem {
  public:
-  explicit SDLSystem(unsigned flags = SDL_INIT_EVERYTHING) {
+  explicit SDLSystem(unsigned flags) {
     const auto result = SDL_Init(flags);    
     if (result == -1) {
       throw std::runtime_error(SDL_GetError());

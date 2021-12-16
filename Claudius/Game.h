@@ -27,8 +27,7 @@ class Game {
   void onKeyDown(KeyCode key) const noexcept;
   void onKeyUp(KeyCode key) const noexcept;
   bool checkInputs() const noexcept;
- public:
-  Game() noexcept;  
+ public:  
   void run() noexcept;
 };
 

@@ -7,12 +7,6 @@
 
 constexpr KeyCode TranslateKeyCode(SDL_Keycode code) noexcept;
 
-Game::Game() noexcept {
-  // Player test, moving two players to collide with each other.
-  playerOne.Initialize();
-  apple.Initialize(10, 10);
-}
-
 void Game::run() noexcept {
   float dt = 1.0f / 60.0f;
   bool running = true;
@@ -24,27 +18,26 @@ void Game::run() noexcept {
 
 void Game::update(double dt) {
   playerOne.update(dt);
-
-  for (int i = 0; i < playerOne.player_score; i++) {
-    if (playerOne.trans.GetPosition() ==
-        playerOne.parts[i].trans.GetPosition()) {
-      playerOne.ResetPlayer();
+  for (int i = 0; i < playerOne.score; i++) {
+    if (playerOne.trans.GetPosition() == playerOne.parts[i].GetPosition()) {
+      playerOne.reset();
+      return;
     }
   }
 
   // Player going out of X bounds.
   if (playerOne.trans.GetX() > width || playerOne.trans.GetX() < 0) {
-    playerOne.ResetPlayer();
+    playerOne.reset();
   }
 
   // Player going out of Y bounds.
   if (playerOne.trans.GetY() > height || playerOne.trans.GetY() < 0) {
-    playerOne.ResetPlayer();
+    playerOne.reset();
   }
 
   // Player collide on apple.
   if (playerOne.trans.GetPosition() == apple.trans.GetPosition()) {
-    playerOne.player_score++;
+    playerOne.score++;
     apple.trans.SetPosition((rand() % 125) * 10.0f, (rand() % 70) * 10.0f);
   }
 }

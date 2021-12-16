@@ -2,8 +2,8 @@
 
 struct Vector2
 {
-	float x {}; 
-	float y {};
+	float x = 0.0f; 
+	float y = 0.0f;
 
 	Vector2();
 	Vector2(const Vector2& rhs);

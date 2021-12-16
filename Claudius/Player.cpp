@@ -3,65 +3,52 @@
 #include <cmath>
 #include <iostream>
 
-void Player::Initialize() {
-  color.SetColor(0, 255, 0, 0);
-  rect.SetBounds(0, 0, size, size);
-  trans.SetPosition(starting_x, starting_y);
-  player_score = 0;
-
-  for (int i = 0; i < player_size; i++) {
-    parts[i].color.SetColor(255, 0, 0, 0);
-    parts[i].rect.SetBounds(0, 0, size, size);
-    parts[i].trans.SetPosition(trans.GetX(), trans.GetY());
-  }
-}
-
 void Player::render(const Renderer& renderManager) const noexcept {
   renderManager.render(rect, color, trans);
-  for (int i = 0; i < player_score; i++) {
-    renderManager.render(parts[i].rect, parts[i].color, parts[i].trans);
+  for (int i = 0; i < score; i++) {
+    renderManager.render(rect, color, parts[i]);
   }
 }
 
 void Player::update([[maybe_unused]] double dt) {
-  x_array_difference[0] = trans.GetX() - parts[0].trans.GetX();
-  y_array_difference[0] = trans.GetY() - parts[0].trans.GetY();
+  x_array_difference[0] = trans.GetX() - parts[0].GetX();
+  y_array_difference[0] = trans.GetY() - parts[0].GetY();
 
   for (int i = 1; i < (player_size - 1); i++) {
-    x_array_difference[i] = parts[i].trans.GetX() - parts[i + 1].trans.GetX();
-    y_array_difference[i] = parts[i].trans.GetY() - parts[i + 1].trans.GetY();
+    x_array_difference[i] = parts[i].GetX() - parts[i + 1].GetX();
+    y_array_difference[i] = parts[i].GetY() - parts[i + 1].GetY();
   }
 
   if (moving_left == true) {
     trans.ChangePosition(-movement_speed, 0);
-    parts[0].trans.ChangePosition(x_array_difference[0], y_array_difference[0]);
+    parts[0].ChangePosition(x_array_difference[0], y_array_difference[0]);
 
     for (int i = 1; i < player_size; i++) {
-      parts[i].trans.ChangePosition(x_array_difference[i - 1],
+      parts[i].ChangePosition(x_array_difference[i - 1],
                                     y_array_difference[i - 1]);
     }
   } else if (moving_right == true) {
     trans.ChangePosition(movement_speed, 0);
-    parts[0].trans.ChangePosition(x_array_difference[0], y_array_difference[0]);
+    parts[0].ChangePosition(x_array_difference[0], y_array_difference[0]);
 
     for (int i = 1; i < player_size; i++) {
-      parts[i].trans.ChangePosition(x_array_difference[i - 1],
+      parts[i].ChangePosition(x_array_difference[i - 1],
                                     y_array_difference[i - 1]);
     }
   } else if (moving_up == true) {
     trans.ChangePosition(0, -movement_speed);
-    parts[0].trans.ChangePosition(x_array_difference[0], y_array_difference[0]);
+    parts[0].ChangePosition(x_array_difference[0], y_array_difference[0]);
 
     for (int i = 1; i < player_size; i++) {
-      parts[i].trans.ChangePosition(x_array_difference[i - 1],
+      parts[i].ChangePosition(x_array_difference[i - 1],
                                     y_array_difference[i - 1]);
     }
   } else if (moving_down == true) {
     trans.ChangePosition(0, movement_speed);
-    parts[0].trans.ChangePosition(x_array_difference[0], y_array_difference[0]);
+    parts[0].ChangePosition(x_array_difference[0], y_array_difference[0]);
 
     for (int i = 1; i < player_size; i++) {
-      parts[i].trans.ChangePosition(x_array_difference[i - 1],
+      parts[i].ChangePosition(x_array_difference[i - 1],
                                     y_array_difference[i - 1]);
     }
   }
@@ -91,8 +78,8 @@ void Player::onKeyDown(KeyCode key) noexcept {
   }
 }
 
-void Player::ResetPlayer() {
-  player_score = 0;
+void Player::reset() {
+  score = 0;
   moving_right = false;
   moving_left = false;
   moving_up = false;
