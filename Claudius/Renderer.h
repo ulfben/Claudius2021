@@ -1,8 +1,11 @@
 #pragma once
 #include "CoreIncludes.h"
+#include "Color.h"
+#include "Vector2.h"
+#include "Rectangle.h"
 class Renderer {
   SDL_Renderer* renderer = nullptr;
-  Color backgroundColor;
+  Color bgColor;
 
  public:
   explicit Renderer(SDL_Window* window) {
@@ -25,16 +28,20 @@ class Renderer {
   }
 
   void enterFrame() const noexcept {
-    setDrawColor(backgroundColor);
+    setDrawColor(bgColor);
     SDL_RenderClear(renderer);
   }
-  void render(const Rectangle& rect, const Color& color,
-              const Transform& trans) const noexcept {
-    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-    SDL_Rect sdlrect{static_cast<int>(trans.position.x),
-                     static_cast<int>(trans.position.y), rect.w, rect.h};
+
+  void render(Vector2 pos) const noexcept {
+    const SDL_Rect sdlrect{static_cast<int>(pos.x), static_cast<int>(pos.y), TILE_SIZE, TILE_SIZE};
     SDL_RenderFillRect(renderer, &sdlrect);
   }
+
+  void render(Vector2 pos, Color color) const noexcept {
+    setDrawColor(color);
+    render(pos);    
+  }
+
   void exitFrame() const noexcept {
     SDL_RenderPresent(renderer);
     SDL_Delay(1000 / 20);

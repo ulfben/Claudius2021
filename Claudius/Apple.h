@@ -1,14 +1,16 @@
 #pragma once
-#include "Renderer.h"
-#include "Rectangle.h"
 #include "Color.h"
-#include "Transform.h"
-constexpr static size_t width = 10;
-struct Apple{		
-	void render(const Renderer& r) const noexcept {
-        r.render(rect, color, trans);
-    }
-	Rectangle rect{0, 0, width, width};
-    Color color{0, 255, 0, 0};
-    Transform trans{100, 200, 0};
+#include "Renderer.h"
+#include "Vector2.h"
+
+class Apple {  
+  Color color{0, 255, 0, 0};
+  Vector2 pos{100.0f, 200.0f};
+ public:
+  void render(const Renderer& r) const noexcept { r.render(pos, color); }
+  inline Vector2 getPos() const noexcept { return pos;  }
+  inline void respawnWithin(Rectangle bounds) noexcept {
+    pos.x = static_cast<float>((rand() % bounds.w) + bounds.x);
+    pos.y = static_cast<float>((rand() % bounds.h) + bounds.y);
+  }
 };

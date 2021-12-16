@@ -6,3 +6,4 @@
 #pragma warning(pop)
 #include <stdexcept>
 
+static constexpr uint8_t TILE_SIZE = 10;

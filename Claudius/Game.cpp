@@ -7,38 +7,35 @@
 
 constexpr KeyCode TranslateKeyCode(SDL_Keycode code) noexcept;
 
-void Game::run() noexcept {
-  float dt = 1.0f / 60.0f;
-  bool running = true;
-  while (running = checkInputs()) {
-    update(dt);
+void Game::run() noexcept {   
+  while (true) {
+    if (!checkInputs()) {
+      return;
+    }
+    update();
     render();
   }
 }
 
-void Game::update(double dt) {
-  playerOne.update(dt);
-  for (int i = 0; i < playerOne.score; i++) {
-    if (playerOne.trans.GetPosition() == playerOne.parts[i].GetPosition()) {
-      playerOne.reset();
-      return;
-    }
-  }
 
-  // Player going out of X bounds.
-  if (playerOne.trans.GetX() > width || playerOne.trans.GetX() < 0) {
-    playerOne.reset();
-  }
+void Game::respawnApple() noexcept {
+  apple.respawnWithin(stage);
+  while (playerOne.isColliding(apple.getPos())) {
+    apple.respawnWithin(stage);
+  }      
+}
 
-  // Player going out of Y bounds.
-  if (playerOne.trans.GetY() > height || playerOne.trans.GetY() < 0) {
-    playerOne.reset();
+void Game::update() noexcept{
+  playerOne.update();  
+  if (playerOne.isColliding(apple.getPos())) {
+    playerOne.score++; 
+    return respawnApple();
   }
-
-  // Player collide on apple.
-  if (playerOne.trans.GetPosition() == apple.trans.GetPosition()) {
-    playerOne.score++;
-    apple.trans.SetPosition((rand() % 125) * 10.0f, (rand() % 70) * 10.0f);
+  if (!playerOne.isInside(stage)) {
+    return playerOne.reset();
+  }
+  if (playerOne.isSelfColliding()) {
+    return playerOne.reset();
   }
 }
 
@@ -49,11 +46,11 @@ void Game::render() const noexcept {
   renderer.exitFrame();
 }
 
-void Game::onKeyDown(KeyCode key) const noexcept { playerOne.onKeyDown(key); }
+void Game::onKeyDown(KeyCode key) noexcept { playerOne.onKeyDown(key); }
 
 void Game::onKeyUp([[maybe_unused]] KeyCode key) const noexcept {}
 
-bool Game::checkInputs() const noexcept {
+bool Game::checkInputs() noexcept {
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
     switch (e.type) {
@@ -65,6 +62,8 @@ bool Game::checkInputs() const noexcept {
         break;
       case SDL_KEYUP:
         onKeyUp(TranslateKeyCode(e.key.keysym.sym));
+        break;
+      default:
         break;
     }
   }

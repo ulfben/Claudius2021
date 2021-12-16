@@ -1,31 +1,35 @@
 #pragma once
 
-struct Vector2
-{
-	float x = 0.0f; 
-	float y = 0.0f;
+struct Vector2 {
+  float x = 0.0f;
+  float y = 0.0f;
+  Vector2() = default;
+  constexpr Vector2(const float x, const float y) noexcept : x(x), y(y) {}
 
-	Vector2();
-	Vector2(const Vector2& rhs);
-	Vector2(const float x, const float y);
+  void operator+=(const Vector2& rhs) noexcept {
+    x += rhs.x;
+    y += rhs.y;
+  }
+  bool operator==(const Vector2& rhs) const noexcept {
+    return x == rhs.x && y == rhs.y;
+  }
+  Vector2 operator+(const Vector2& rhs) const noexcept;
+  Vector2 operator-(const Vector2& rhs) const noexcept;
+  Vector2 operator*(const Vector2& rhs) const noexcept;
+  Vector2 operator/(const Vector2& rhs) const noexcept;
+  Vector2 operator*(const float rhs) const noexcept;
+  Vector2 operator/(const float rhs) const noexcept;
 
-	Vector2& operator=(const Vector2& rhs);				 
-	Vector2 operator+(const Vector2& rhs) const;		 
-	Vector2 operator-(const Vector2& rhs) const;		 
-	Vector2 operator*(const Vector2& rhs) const;	
-	Vector2 operator/(const Vector2& rhs) const;
-	Vector2 operator*(const float rhs) const;			 
-	Vector2 operator/(const float rhs) const;		
+  Vector2 perpendicular() const noexcept;
+  Vector2 unit() const noexcept;
 
-	bool operator==(const Vector2& rhs) const;
-
-	Vector2 perpendicular() const;
-	Vector2 unit() const;
-
-	float length() const;
-	float length_squared() const;
-	float dot(const Vector2& rhs) const;
-	float cross(const Vector2& rhs) const;
-	void normalize();
-
+  float length() const noexcept;
+  float length_squared() const noexcept;
+  float dot(const Vector2& rhs) const noexcept;
+  float cross(const Vector2& rhs) const noexcept;
+  void normalize() noexcept;
 };
+
+inline constexpr bool isBetween(float in, int min, int max) noexcept {
+  return min <= in && max >= in;
+}

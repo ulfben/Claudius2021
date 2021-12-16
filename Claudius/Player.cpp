@@ -1,89 +1,50 @@
 #include "Player.h"
 
+#include <algorithm>
 #include <cmath>
-#include <iostream>
 
 void Player::render(const Renderer& renderManager) const noexcept {
-  renderManager.render(rect, color, trans);
-  for (int i = 0; i < score; i++) {
-    renderManager.render(rect, color, parts[i]);
+  renderManager.setDrawColor(color);
+  renderManager.render(head);
+  for (auto p : trailing_pieces) {
+    renderManager.render(p);
   }
 }
 
-void Player::update([[maybe_unused]] double dt) {
-  x_array_difference[0] = trans.GetX() - parts[0].GetX();
-  y_array_difference[0] = trans.GetY() - parts[0].GetY();
+bool Player::isColliding(Vector2 pos) const noexcept {
+  return std::find(trailing_pieces.begin(), trailing_pieces.end(), pos) !=
+         trailing_pieces.end();
+}
 
-  for (int i = 1; i < (player_size - 1); i++) {
-    x_array_difference[i] = parts[i].GetX() - parts[i + 1].GetX();
-    y_array_difference[i] = parts[i].GetY() - parts[i + 1].GetY();
+bool Player::isSelfColliding() const noexcept { return isColliding(head); }
+
+bool Player::isInside(Rectangle bounds) const noexcept {
+  return isBetween(head.x, bounds.x, bounds.w) &&
+         isBetween(head.y, bounds.y, bounds.h);
+}
+
+void Player::update() noexcept {
+  for (auto i = trailing_pieces.size() - 1; i > 0; i--) {
+    trailing_pieces[i] = trailing_pieces[i - 1];
   }
-
-  if (moving_left == true) {
-    trans.ChangePosition(-movement_speed, 0);
-    parts[0].ChangePosition(x_array_difference[0], y_array_difference[0]);
-
-    for (int i = 1; i < player_size; i++) {
-      parts[i].ChangePosition(x_array_difference[i - 1],
-                                    y_array_difference[i - 1]);
-    }
-  } else if (moving_right == true) {
-    trans.ChangePosition(movement_speed, 0);
-    parts[0].ChangePosition(x_array_difference[0], y_array_difference[0]);
-
-    for (int i = 1; i < player_size; i++) {
-      parts[i].ChangePosition(x_array_difference[i - 1],
-                                    y_array_difference[i - 1]);
-    }
-  } else if (moving_up == true) {
-    trans.ChangePosition(0, -movement_speed);
-    parts[0].ChangePosition(x_array_difference[0], y_array_difference[0]);
-
-    for (int i = 1; i < player_size; i++) {
-      parts[i].ChangePosition(x_array_difference[i - 1],
-                                    y_array_difference[i - 1]);
-    }
-  } else if (moving_down == true) {
-    trans.ChangePosition(0, movement_speed);
-    parts[0].ChangePosition(x_array_difference[0], y_array_difference[0]);
-
-    for (int i = 1; i < player_size; i++) {
-      parts[i].ChangePosition(x_array_difference[i - 1],
-                                    y_array_difference[i - 1]);
-    }
-  }
+  trailing_pieces[0] = head;
+  head += heading;
 }
 
 void Player::onKeyDown(KeyCode key) noexcept {
   if (key == KeyCode::LEFT_ARROW) {
-    moving_left = true;
-    moving_right = false;
-    moving_up = false;
-    moving_down = false;
+    heading = LEFT;
   } else if (key == KeyCode::RIGHT_ARROW) {
-    moving_left = false;
-    moving_right = true;
-    moving_up = false;
-    moving_down = false;
+    heading = RIGHT;
   } else if (key == KeyCode::UP_ARROW) {
-    moving_left = false;
-    moving_right = false;
-    moving_up = true;
-    moving_down = false;
+    heading = UP;
   } else if (key == KeyCode::DOWN_ARROW) {
-    moving_left = false;
-    moving_right = false;
-    moving_up = false;
-    moving_down = true;
+    heading = DOWN;
   }
 }
 
-void Player::reset() {
+void Player::reset() noexcept {
   score = 0;
-  moving_right = false;
-  moving_left = false;
-  moving_up = false;
-  moving_down = false;
-
-  trans.SetPosition(starting_x, starting_y);
+  heading = STILL;
+  head = {starting_x, starting_y};
 }
