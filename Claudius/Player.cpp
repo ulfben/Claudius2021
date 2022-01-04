@@ -38,17 +38,16 @@ void Player::grow() noexcept {
 }
 
 void Player::update() noexcept {
-  const auto new_head = head() + heading;
-  std::rotate(body_segments.begin(), body_segments.begin() + 1,
-              body_segments.end());
-  head() = new_head;  
+  std::copy_backward(body_segments.begin(), body_segments.end() - 1,
+                     body_segments.end());
+  head() += heading;
 }
 
 void Player::onKeyDown(KeyCode key) noexcept {
   if (key == KeyCode::LEFT_ARROW) {
-    if (heading == RIGHT && hasTrailingSegments()) {
+    if (heading == RIGHT && hasTrailingSegments()) {  // no accidental suicides!
       return;
-    }  // no accidental suicides!
+    } 
     heading = LEFT;
   } else if (key == KeyCode::RIGHT_ARROW) {
     if (heading == LEFT && hasTrailingSegments()) {

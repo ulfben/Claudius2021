@@ -14,7 +14,7 @@ void Game::run() noexcept {
     }
     update();
     render();
-    SDL_Delay(30);
+    SDL_Delay(45);
   }
 }
 
