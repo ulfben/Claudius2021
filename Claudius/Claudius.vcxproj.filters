@@ -77,5 +77,8 @@
     <ClInclude Include="CoreIncludes.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="RNG.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

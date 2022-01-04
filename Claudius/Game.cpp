@@ -14,28 +14,29 @@ void Game::run() noexcept {
     }
     update();
     render();
+    SDL_Delay(30);
   }
 }
 
 
 void Game::respawnApple() noexcept {
-  apple.respawnWithin(stage);
+  apple.respawn();
   while (playerOne.isColliding(apple.getPos())) {
-    apple.respawnWithin(stage);
+    apple.respawn();
   }      
 }
 
 void Game::update() noexcept{
   playerOne.update();  
   if (playerOne.isColliding(apple.getPos())) {
-    playerOne.score++; 
+    playerOne.grow(); 
     return respawnApple();
   }
   if (!playerOne.isInside(stage)) {
-    return playerOne.reset();
+    return playerOne.respawn();
   }
   if (playerOne.isSelfColliding()) {
-    return playerOne.reset();
+    return playerOne.respawn();
   }
 }
 

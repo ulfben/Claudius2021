@@ -33,7 +33,7 @@ class Renderer {
   }
 
   void render(Vector2 pos) const noexcept {
-    const SDL_Rect sdlrect{static_cast<int>(pos.x), static_cast<int>(pos.y), TILE_SIZE, TILE_SIZE};
+    const SDL_Rect sdlrect{pos.x, pos.y, TILE_SIZE, TILE_SIZE};
     SDL_RenderFillRect(renderer, &sdlrect);
   }
 
@@ -44,6 +44,5 @@ class Renderer {
 
   void exitFrame() const noexcept {
     SDL_RenderPresent(renderer);
-    SDL_Delay(1000 / 20);
   }
 };
