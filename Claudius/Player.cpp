@@ -38,8 +38,7 @@ void Player::grow() noexcept {
 }
 
 void Player::update() noexcept {
-  std::copy_backward(body_segments.begin(), body_segments.end() - 1,
-                     body_segments.end());
+  std::shift_right(body_segments.begin(), body_segments.end(), 1);
   head() += heading;
 }
 
@@ -69,6 +68,6 @@ void Player::onKeyDown(KeyCode key) noexcept {
 
 void Player::respawn() noexcept {
   body_segments.clear();
-  body_segments.emplace_back(starting_x, starting_y);
+  body_segments.emplace_back(STAGE_CENTER_X, STAGE_CENTER_Y);
   heading = STILL;
 }

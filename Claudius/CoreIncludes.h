@@ -9,9 +9,11 @@
 static constexpr uint8_t TILE_SIZE = 10;
 static constexpr uint8_t COLUMNS = 50;
 static constexpr uint8_t ROWS = 50;
-constexpr static unsigned STAGE_PIXEL_WIDTH = TILE_SIZE * COLUMNS;
-constexpr static unsigned STAGE_PIXEL_HEIGHT = TILE_SIZE * ROWS;
-constexpr static std::string_view GAME_TITLE = "Snake";
+static constexpr auto STAGE_PIXEL_WIDTH = TILE_SIZE * COLUMNS;
+static constexpr auto STAGE_PIXEL_HEIGHT = TILE_SIZE * ROWS;
+static constexpr auto STAGE_CENTER_X = STAGE_PIXEL_WIDTH / 2;
+static constexpr auto STAGE_CENTER_Y = STAGE_PIXEL_HEIGHT / 2;
+static constexpr std::string_view GAME_TITLE = "Snake";
 
 // narrow_cast(): a searchable way to do narrowing casts of values
 template <class T, class U>
