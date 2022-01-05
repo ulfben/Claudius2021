@@ -15,6 +15,12 @@ static constexpr auto STAGE_CENTER_X = STAGE_PIXEL_WIDTH / 2;
 static constexpr auto STAGE_CENTER_Y = STAGE_PIXEL_HEIGHT / 2;
 static constexpr std::string_view GAME_TITLE = "Snake";
 
+static constexpr Vector2 LEFT(-TILE_SIZE, 0);
+static constexpr Vector2 RIGHT(TILE_SIZE, 0);
+static constexpr Vector2 UP(0, -TILE_SIZE);
+static constexpr Vector2 DOWN(0, TILE_SIZE);
+static constexpr Vector2 STILL(0, 0);
+
 // narrow_cast(): a searchable way to do narrowing casts of values
 template <class T, class U>
 constexpr T narrow_cast(U&& u) noexcept {

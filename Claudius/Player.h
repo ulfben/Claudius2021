@@ -7,12 +7,6 @@
 #include "Renderer.h"
 #include "Vector2.h"
 
-static constexpr Vector2 LEFT(-TILE_SIZE, 0);
-static constexpr Vector2 RIGHT(TILE_SIZE, 0);
-static constexpr Vector2 UP(0, -TILE_SIZE);
-static constexpr Vector2 DOWN(0, TILE_SIZE);
-static constexpr Vector2 STILL(0, 0);
-
 class Player {
   std::vector<Vector2> body_segments{1, Vector2{STAGE_CENTER_X, STAGE_CENTER_Y}};  
   Vector2 heading = STILL;
