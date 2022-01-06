@@ -22,8 +22,7 @@ class Game {
   Apple apple;  
   void update() noexcept;
   void render() const noexcept;
-  void onKeyDown(KeyCode key) noexcept;
-  void onKeyUp(KeyCode key) const noexcept;
+  void onKeyDown(KeyCode key) noexcept;  
   bool checkInputs() noexcept;
   void respawnApple() noexcept;
 

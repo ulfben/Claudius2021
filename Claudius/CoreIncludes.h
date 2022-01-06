@@ -5,6 +5,7 @@
 #include "SDL.h"
 #pragma warning(pop)
 #include <stdexcept>
+#include "Vector2.h"
 
 static constexpr uint8_t TILE_SIZE = 10;
 static constexpr uint8_t COLUMNS = 50;

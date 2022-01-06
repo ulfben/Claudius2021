@@ -1,8 +1,5 @@
-// 2019-12-05 Teemu Laiho
-#include "Game.h"
-
 #include <iostream>
-
+#include "Game.h"
 #include "CoreIncludes.h"
 
 constexpr KeyCode TranslateKeyCode(SDL_Keycode code) noexcept;
@@ -49,8 +46,6 @@ void Game::render() const noexcept {
 
 void Game::onKeyDown(KeyCode key) noexcept { playerOne.onKeyDown(key); }
 
-void Game::onKeyUp([[maybe_unused]] KeyCode key) const noexcept {}
-
 bool Game::checkInputs() noexcept {
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
@@ -60,10 +55,8 @@ bool Game::checkInputs() noexcept {
         break;
       case SDL_KEYDOWN:
         onKeyDown(TranslateKeyCode(e.key.keysym.sym));
-        break;
-      case SDL_KEYUP:
-        onKeyUp(TranslateKeyCode(e.key.keysym.sym));
-        break;
+        return true; //we accept only one input per game tick, so return.
+        break;     
       default:
         break;
     }

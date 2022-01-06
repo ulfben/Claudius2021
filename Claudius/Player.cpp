@@ -5,7 +5,7 @@
 
 void Player::render(const Renderer& renderManager) const noexcept {
   renderManager.setDrawColor(color);
-  for (auto& p : body_segments) {
+  for (const auto& p : body_segments) {
     renderManager.render(p);
   }
 }
@@ -24,9 +24,8 @@ bool Player::isSelfColliding() const noexcept {
   return hasTrailingSegments() && isColliding(head());
 }
 
-bool Player::isInside(Rectangle bounds) const noexcept {
-  const auto pos = head();
-  return ::isInside(pos, bounds);
+bool Player::isInside(Rectangle bounds) const noexcept {  
+  return ::isInside(head(), bounds);
 }
 
 void Player::grow() noexcept {
