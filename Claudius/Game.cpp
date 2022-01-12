@@ -13,16 +13,17 @@ void Game::run() noexcept {
 }
 
 void Game::respawnApple() noexcept {
-  xoshiro256ss rng{timer.ticks()};
+//TODO: if snake.length() > ~75% of stage size, prefer an algorithm that won't run forever. :)
+  RNG rng{timer.ticks()};
   apple.respawn(rng);
-  while (snake.isColliding(apple.getPos())) {
+  while (snake.isCollidingWith(apple.position())) {
     apple.respawn(rng);
   }
 }
 
 void Game::update() noexcept {
   snake.update();
-  if (snake.isColliding(apple.getPos())) {
+  if (snake.isCollidingWith(apple.position())) {
     snake.grow();
     return respawnApple();
   }

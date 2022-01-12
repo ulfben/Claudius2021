@@ -7,22 +7,22 @@
 // https://prng.di.unimi.it/xoshiro256starstar.c
 static_assert(sizeof(long long) == 8, "64-bit machines only");
 
-class xoshiro256ss {
+class RNG {
  public:
   using u64 = unsigned long long;
   using result_type = u64;
   static constexpr u64 min() noexcept { return 0; }
   static constexpr u64 max() noexcept { return static_cast<u64>(-1); }
 
-  constexpr explicit xoshiro256ss(u64 seed = 0) noexcept {
+  constexpr explicit RNG(u64 seed = 0) noexcept {
     s[0] = splitmix64(seed);
     s[1] = splitmix64(seed);
     s[2] = splitmix64(seed);
     s[3] = splitmix64(seed);
   }
 
-  constexpr explicit xoshiro256ss(float seed) noexcept
-      : xoshiro256ss(static_cast<u64>(seed)) {}
+  constexpr explicit RNG(float seed) noexcept
+      : RNG(static_cast<u64>(seed)) {}
 
   constexpr result_type operator()() noexcept {
     const result_type result = rotl(s[1] * 5, 7) * 9;

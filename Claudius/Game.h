@@ -9,7 +9,6 @@
 #include "Window.h"
 #include "Timer.h"
 class Game {
-  bool running = true;
   Rectangle stage{0, 0, STAGE_PIXEL_WIDTH, STAGE_PIXEL_HEIGHT};
   SDLSystem sdl{SDL_INIT_EVERYTHING};
   Timer timer;
@@ -17,6 +16,7 @@ class Game {
   Renderer renderer{window.getPtr()};
   Player snake;
   Apple apple;
+  bool running = true;
   void update() noexcept;
   void render() const noexcept;
   void onKeyDown(KeyCode key) noexcept;

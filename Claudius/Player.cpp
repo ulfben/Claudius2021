@@ -3,43 +3,39 @@
 
 void Player::render(const Renderer& renderManager) const noexcept {
   renderManager.setDrawColor(color);
-  for (const auto& p : body_segments) {
-    renderManager.render(p);
+  for (const auto& part : body) {
+    renderManager.render(part);
   }
 }
 
-bool Player::isColliding(Coord pos) const noexcept {
-  if (!hasTrailingSegments()) {
+bool Player::isCollidingWith(Coord pos) const noexcept {
+  if (!hasTail()) {
     return head() == pos;
   }
-  const auto firstTrailingPiece = body_segments.begin() + 1;
+  const auto tailBegin = body.begin() + 1;
   return std::any_of(
-      firstTrailingPiece, body_segments.end(),
+      tailBegin, body.end(),
       [pos](const auto& piece) noexcept { return piece == pos; });
 }
 
 bool Player::isOutsideOf(Rectangle bounds) const noexcept {
-  return !isInside(bounds);
+  return !::isInside(head(), bounds);
 }
 
 bool Player::isSelfColliding() const noexcept {
-  return hasTrailingSegments() && isColliding(head());
-}
-
-bool Player::isInside(Rectangle bounds) const noexcept {
-  return ::isInside(head(), bounds);
+  return hasTail() && isCollidingWith(head());
 }
 
 void Player::grow() noexcept {
   try {
-    body_segments.emplace_back(getPos());
+    body.emplace_back(position());
   } catch (...) {
     /*swallowing exception. The game can keep running, the snake won't grow.*/
   }
 }
 
 void Player::update() noexcept {
-  std::shift_right(body_segments.begin(), body_segments.end(), 1);
+  std::shift_right(body.begin(), body.end(), 1);
   head() += heading;
 }
 
@@ -56,7 +52,7 @@ void Player::onKeyDown(KeyCode key) noexcept {
 }
 
 void Player::respawn() noexcept {
-  body_segments.clear();
-  body_segments.emplace_back(STAGE_CENTER_X, STAGE_CENTER_Y);
+  body.clear();
+  body.emplace_back(STAGE_CENTER_X, STAGE_CENTER_Y);
   heading = STILL;
 }
