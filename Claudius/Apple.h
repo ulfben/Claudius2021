@@ -1,17 +1,15 @@
 #pragma once
 #include "Color.h"
 #include "Renderer.h"
-#include "Vector2.h"
+#include "Coord.h"
 #include "RNG.h"
 class Apple {  
-  Color color{255, 0, 0, 0};
-  Vector2 pos{0, 0};
- public:
-  Apple() noexcept { respawn();  }
+  static constexpr Color color{255, 0, 0, ALPHA_OPAQUE};
+  Coord pos{0, 0};
+ public:  
   void render(const Renderer& r) const noexcept { r.render(pos, color); }
-  inline Vector2 getPos() const noexcept { return pos;  }
-  inline void respawn() noexcept {    
-    xoshiro256ss rng(pos.length_squared());    
+  inline Coord getPos() const noexcept { return pos;  }
+  inline void respawn(xoshiro256ss& rng) noexcept {        
     const auto col = rng(0, COLUMNS - 1);
     const auto row = rng(0, COLUMNS - 1);
     pos.x = narrow_cast<int>(col) * TILE_SIZE; 

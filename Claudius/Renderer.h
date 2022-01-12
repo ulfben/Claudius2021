@@ -1,7 +1,7 @@
 #pragma once
 #include "CoreIncludes.h"
 #include "Color.h"
-#include "Vector2.h"
+#include "Coord.h"
 #include "Rectangle.h"
 class Renderer {
   SDL_Renderer* renderer = nullptr;
@@ -32,12 +32,12 @@ class Renderer {
     SDL_RenderClear(renderer);
   }
 
-  void render(Vector2 pos) const noexcept {
+  void render(Coord pos) const noexcept {
     const SDL_Rect sdlrect{pos.x, pos.y, TILE_SIZE, TILE_SIZE};
     SDL_RenderFillRect(renderer, &sdlrect);
   }
 
-  void render(Vector2 pos, Color color) const noexcept {
+  void render(Coord pos, Color color) const noexcept {
     setDrawColor(color);
     render(pos);    
   }

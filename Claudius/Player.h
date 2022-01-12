@@ -5,28 +5,28 @@
 #include "KeyCode.h"
 #include "Rectangle.h"
 #include "Renderer.h"
-#include "Vector2.h"
+#include "Coord.h"
 
 class Player {
-  std::vector<Vector2> body_segments{1, Vector2{STAGE_CENTER_X, STAGE_CENTER_Y}};  
-  Vector2 heading = STILL;
+  std::vector<Coord> body_segments{1, Coord{STAGE_CENTER_X, STAGE_CENTER_Y}};  
+  Coord heading = STILL;
   Color color{0, 255, 0, 0};
 
-  Vector2& head() noexcept { return *body_segments.begin(); }
-  const Vector2& head() const noexcept { return *body_segments.begin(); }
+  Coord& head() noexcept { return *body_segments.begin(); }
+  const Coord& head() const noexcept { return *body_segments.begin(); }
   bool hasTrailingSegments() const noexcept { return length() > 1; }
-
- public:
+  bool isInside(Rectangle bounds) const noexcept;  
+ 
+public:
   int score = 0;
-  void onKeyDown(KeyCode key) noexcept;
+  void onKeyDown(KeyCode key) noexcept;  
   void render(const Renderer& renderer) const noexcept;
-
   void update() noexcept;
   void respawn() noexcept;
   bool isSelfColliding() const noexcept;
-  bool isColliding(Vector2 pos) const noexcept;
-  bool isInside(Rectangle bounds) const noexcept;
+  bool isColliding(Coord pos) const noexcept;  
+  bool isOutsideOf(Rectangle bounds) const noexcept;
   void grow() noexcept;
-  Vector2 getPos() const noexcept { return head(); }
+  Coord getPos() const noexcept { return head(); }
   size_t length() const noexcept { return body_segments.size(); }
 };

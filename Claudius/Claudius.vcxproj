@@ -163,7 +163,6 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Apple.h" />
@@ -176,7 +175,8 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RNG.h" />
     <ClInclude Include="SDLSystem.h" />
-    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="Coord.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,7 +1,5 @@
 #include "Player.h"
-
 #include <algorithm>
-#include <cmath>
 
 void Player::render(const Renderer& renderManager) const noexcept {
   renderManager.setDrawColor(color);
@@ -10,7 +8,7 @@ void Player::render(const Renderer& renderManager) const noexcept {
   }
 }
 
-bool Player::isColliding(Vector2 pos) const noexcept {
+bool Player::isColliding(Coord pos) const noexcept {
   if (!hasTrailingSegments()) {
     return head() == pos;
   }
@@ -20,11 +18,15 @@ bool Player::isColliding(Vector2 pos) const noexcept {
       [pos](const auto& piece) noexcept { return piece == pos; });
 }
 
+bool Player::isOutsideOf(Rectangle bounds) const noexcept {
+  return !isInside(bounds);
+}
+
 bool Player::isSelfColliding() const noexcept {
   return hasTrailingSegments() && isColliding(head());
 }
 
-bool Player::isInside(Rectangle bounds) const noexcept {  
+bool Player::isInside(Rectangle bounds) const noexcept {
   return ::isInside(head(), bounds);
 }
 
@@ -41,26 +43,14 @@ void Player::update() noexcept {
   head() += heading;
 }
 
-void Player::onKeyDown(KeyCode key) noexcept {
-  if (key == KeyCode::LEFT_ARROW) {
-    if (heading == RIGHT && hasTrailingSegments()) {  // no accidental suicides!
-      return;
-    } 
+void Player::onKeyDown(KeyCode key) noexcept {  
+  if (key == KeyCode::LEFT_ARROW && heading != RIGHT) {    
     heading = LEFT;
-  } else if (key == KeyCode::RIGHT_ARROW) {
-    if (heading == LEFT && hasTrailingSegments()) {
-      return;
-    }
-    heading = RIGHT;
-  } else if (key == KeyCode::UP_ARROW) {
-    if (heading == DOWN && hasTrailingSegments()) {
-      return;
-    }
+  } else if (key == KeyCode::RIGHT_ARROW && heading != LEFT) {
+    heading = RIGHT; 
+  } else if (key == KeyCode::UP_ARROW && heading != DOWN) {
     heading = UP;
-  } else if (key == KeyCode::DOWN_ARROW) {
-    if (heading == UP && hasTrailingSegments()) {
-      return;
-    }
+  } else if (key == KeyCode::DOWN_ARROW && heading != UP) {
     heading = DOWN;
   }
 }

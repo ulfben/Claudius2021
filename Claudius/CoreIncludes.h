@@ -5,8 +5,10 @@
 #include "SDL.h"
 #pragma warning(pop)
 #include <stdexcept>
-#include "Vector2.h"
+#include <string_view>
+#include "Coord.h"
 
+static constexpr unsigned FRAME_DELAY_MS = 45; 
 static constexpr uint8_t TILE_SIZE = 10;
 static constexpr uint8_t COLUMNS = 50;
 static constexpr uint8_t ROWS = 50;
