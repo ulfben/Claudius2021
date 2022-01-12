@@ -12,7 +12,7 @@ class Renderer {
     renderer = SDL_CreateRenderer(window, -1,
                                   SDL_RendererFlags::SDL_RENDERER_ACCELERATED);
     if (renderer == nullptr) {
-      throw std::runtime_error(SDL_GetError());
+      throw SDLError();
     }
   }
   ~Renderer() { SDL_DestroyRenderer(renderer); }

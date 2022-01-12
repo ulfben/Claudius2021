@@ -6,9 +6,10 @@
 #pragma warning(pop)
 #include <stdexcept>
 #include <string_view>
+
 #include "Coord.h"
 
-static constexpr unsigned FRAME_DELAY_MS = 45; 
+static constexpr unsigned FRAME_DELAY_MS = 45;
 static constexpr uint8_t TILE_SIZE = 10;
 static constexpr uint8_t COLUMNS = 50;
 static constexpr uint8_t ROWS = 50;
@@ -29,3 +30,12 @@ template <class T, class U>
 constexpr T narrow_cast(U&& u) noexcept {
   return static_cast<T>(std::forward<U>(u));
 }
+
+// custom exception types
+class SDLError : public std::runtime_error {
+ public:  
+  [[gsl::suppress(f.6, justification: "As long as it depends on std::runtime_error this ctor can not be marked noexcept. std::runtime_error can throw std::bad_alloc.")]]
+  SDLError() : std::runtime_error(SDL_GetError()){};
+};
+
+class SDLInitError : public SDLError {};

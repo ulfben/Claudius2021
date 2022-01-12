@@ -9,7 +9,7 @@ class Window {
                               SDL_WINDOWPOS_CENTERED, width, height,
                               SDL_WindowFlags::SDL_WINDOW_OPENGL);
     if (window == nullptr) {
-      throw std::runtime_error(SDL_GetError());
+      throw SDLError();
     }
   }
   ~Window() { SDL_DestroyWindow(window); }

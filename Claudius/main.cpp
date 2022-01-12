@@ -1,5 +1,6 @@
-﻿#include "CoreIncludes.h"
-#include <iostream>
+﻿#include <iostream>
+
+#include "CoreIncludes.h"
 #include "Game.h"
 #undef main
 
@@ -7,8 +8,10 @@ int main() {
   try {
     Game game;
     game.run();
-  } catch (const std::runtime_error& e) {
-    std::cerr << e.what();
+  } catch (const SDLInitError& e) {
+    std::cerr << "SDL failed to initialize. Error: " << e.what();
+  } catch (const SDLError& e) {
+    std::cerr << "SDL error: " << e.what();
   } catch (...) {
     std::cerr << "Unrecognized exception. Exiting.";
   }
