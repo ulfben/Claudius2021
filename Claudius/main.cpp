@@ -13,7 +13,7 @@ int main() {
   } catch (const SDLError& e) {
     std::cerr << "SDL error: " << e.what();
   } catch (...) {
-    std::cerr << "Unrecognized exception. Exiting.";
+    std::cerr << "Unrecognized exception. Exiting!";
   }
   return 0;
 }
