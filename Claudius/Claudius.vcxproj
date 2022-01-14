@@ -162,12 +162,12 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Snake.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Apple.h" />
     <ClInclude Include="CoreIncludes.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="Snake.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="KeyCode.h" />
     <ClInclude Include="Game.h" />

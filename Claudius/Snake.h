@@ -7,7 +7,7 @@
 #include "Renderer.h"
 #include "Coord.h"
 
-class Player {  
+class Snake {  
   std::vector<Coord> body{1, Coord{STAGE_CENTER_X, STAGE_CENTER_Y}};  
   Coord heading = STILL; 
 

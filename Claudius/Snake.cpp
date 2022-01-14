@@ -1,14 +1,14 @@
-#include "Player.h"
+#include "Snake.h"
 #include <algorithm>
 
-void Player::render(const Renderer& renderManager) const noexcept {
+void Snake::render(const Renderer& renderManager) const noexcept {
   renderManager.setDrawColor(GREEN);
   for (const auto& part : body) {
     renderManager.render(part);
   }
 }
 
-bool Player::isCollidingWith(Coord pos) const noexcept {
+bool Snake::isCollidingWith(Coord pos) const noexcept {
   if (!hasTail()) {
     return head() == pos;
   }
@@ -18,15 +18,17 @@ bool Player::isCollidingWith(Coord pos) const noexcept {
       [pos](const auto& piece) noexcept { return piece == pos; });
 }
 
-bool Player::isOutsideOf(Rectangle bounds) const noexcept {
+bool Snake::isOutsideOf(Rectangle bounds) const noexcept {
+  bounds.h -= TILE_SIZE; 
+  bounds.w -= TILE_SIZE;
   return !::isInside(head(), bounds);
 }
 
-bool Player::isSelfColliding() const noexcept {
+bool Snake::isSelfColliding() const noexcept {
   return hasTail() && isCollidingWith(head());
 }
 
-void Player::grow() noexcept {
+void Snake::grow() noexcept {
   try {
     body.emplace_back(position());
   } catch (...) {
@@ -34,12 +36,12 @@ void Player::grow() noexcept {
   }
 }
 
-void Player::update() noexcept {  
+void Snake::update() noexcept {  
   std::shift_right(body.begin(), body.end(), 1);
   head() += heading;
 }
 
-void Player::onKeyDown(KeyCode key) noexcept {  
+void Snake::onKeyDown(KeyCode key) noexcept {  
   if (key == KeyCode::LEFT_ARROW && heading != RIGHT) {    
     heading = LEFT;
   } else if (key == KeyCode::RIGHT_ARROW && heading != LEFT) {
@@ -51,7 +53,7 @@ void Player::onKeyDown(KeyCode key) noexcept {
   }
 }
 
-void Player::respawn() noexcept {
+void Snake::respawn() noexcept {
   body.clear();
   body.emplace_back(STAGE_CENTER_X, STAGE_CENTER_Y);
   heading = STILL;

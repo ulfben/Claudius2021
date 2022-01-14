@@ -6,7 +6,6 @@
 #pragma warning(pop)
 #include <stdexcept>
 #include <string_view>
-
 #include "Coord.h"
 
 static constexpr unsigned FRAME_DELAY_MS = 45;

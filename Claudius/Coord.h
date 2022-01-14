@@ -16,10 +16,10 @@ struct Coord {
   }
 };
 
-inline constexpr bool isBetween(auto in, auto min, auto max) noexcept {
+constexpr bool isBetween(auto in, auto min, auto max) noexcept {
   return min <= in && max >= in;
 }
-inline constexpr bool isInside(Coord pos, Rectangle bounds) noexcept {
+constexpr bool isInside(Coord pos, Rectangle bounds) noexcept {
   return isBetween(pos.x, bounds.left(), bounds.right()) &&
          isBetween(pos.y, bounds.top(), bounds.bottom());
 }

@@ -3,7 +3,7 @@
 #include "Apple.h"
 #include "CoreIncludes.h"
 #include "KeyCode.h"
-#include "Player.h"
+#include "Snake.h"
 #include "Renderer.h"
 #include "SDLSystem.h"
 #include "Window.h"
@@ -14,13 +14,13 @@ class Game {
   Window window{GAME_TITLE, stage.w, stage.h};
   Renderer renderer{window.getPtr()}; 
   Timer timer;
-  Player snake;
+  Snake snake;
   Apple apple;
   bool running = true;
+  void readInputs() noexcept;
   void update() noexcept;
   void render() const noexcept;
-  void onKeyDown(KeyCode key) noexcept;
-  void readInputs() noexcept;
+  void onKeyDown(KeyCode key) noexcept;  
   void respawnApple() noexcept;
 
  public:
