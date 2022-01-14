@@ -10,10 +10,10 @@
 #include "Timer.h"
 class Game {
   Rectangle stage{0, 0, STAGE_PIXEL_WIDTH, STAGE_PIXEL_HEIGHT};
-  SDLSystem sdl{SDL_INIT_EVERYTHING};
-  Timer timer;
+  SDLSystem sdl{SDL_INIT_EVERYTHING}; 
   Window window{GAME_TITLE, stage.w, stage.h};
-  Renderer renderer{window.getPtr()};
+  Renderer renderer{window.getPtr()}; 
+  Timer timer;
   Player snake;
   Apple apple;
   bool running = true;

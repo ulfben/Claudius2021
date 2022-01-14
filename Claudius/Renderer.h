@@ -4,8 +4,7 @@
 #include "Coord.h"
 #include "Rectangle.h"
 class Renderer {
-  SDL_Renderer* renderer = nullptr;
-  Color bgColor;
+  SDL_Renderer* renderer = nullptr;  
 
  public:
   explicit Renderer(SDL_Window* window) {
@@ -28,7 +27,7 @@ class Renderer {
   }
 
   void enterFrame() const noexcept {
-    setDrawColor(bgColor);
+    setDrawColor(BLACK);
     SDL_RenderClear(renderer);
   }
 

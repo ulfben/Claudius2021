@@ -2,7 +2,7 @@
 #include <algorithm>
 
 void Player::render(const Renderer& renderManager) const noexcept {
-  renderManager.setDrawColor(color);
+  renderManager.setDrawColor(GREEN);
   for (const auto& part : body) {
     renderManager.render(part);
   }
@@ -34,7 +34,7 @@ void Player::grow() noexcept {
   }
 }
 
-void Player::update() noexcept {
+void Player::update() noexcept {  
   std::shift_right(body.begin(), body.end(), 1);
   head() += heading;
 }

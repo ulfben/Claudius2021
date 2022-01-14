@@ -3,11 +3,10 @@
 #include "Renderer.h"
 #include "Coord.h"
 #include "RNG.h"
-class Apple {  
-  static constexpr Color color{255, 0, 0, ALPHA_OPAQUE};
+class Apple {    
   Coord pos{0, 0};
  public:  
-  void render(const Renderer& r) const noexcept { r.render(pos, color); }
+  void render(const Renderer& r) const noexcept { r.render(pos, RED); }
   Coord position() const noexcept { return pos;  }
   void respawn(RNG& rng) noexcept {        
     const auto col = rng(0, COLUMNS - 1);

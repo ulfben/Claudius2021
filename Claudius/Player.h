@@ -7,8 +7,7 @@
 #include "Renderer.h"
 #include "Coord.h"
 
-class Player {
-  static constexpr Color color{0, 255, 0, 0};
+class Player {  
   std::vector<Coord> body{1, Coord{STAGE_CENTER_X, STAGE_CENTER_Y}};  
   Coord heading = STILL; 
 
